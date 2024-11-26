@@ -1,7 +1,14 @@
 package main
 
-import "github.com/JuanManuelRama/OperatingSyStemsGO/commons/connection"
+import (
+	"log"
+
+	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/connection"
+)
 
 func main() {
-	connection.AcceptConection("kernel", "8080")
+	kernel := connection.AcceptConection("kernel", "8080")
+	x := connection.ReciveInt(kernel)
+	log.Printf("Recived %d\n", x)
+	defer kernel.Close()
 }
