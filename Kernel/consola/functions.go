@@ -1,22 +1,47 @@
 package consola
 
-import "fmt"
+import (
+	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/logger"
+	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/utils"
+)
 
 func ExecuteScript(args []string) {
-	fmt.Println("Executing script: ", args)
+	if len(args) == 0 {
+		logger.Warning("No script provided")
+		return
+	}
+	logger.Info("Executing script:" + args[0])
 }
 
 func StartProcess(args []string) {
+	if len(args) == 0 {
+		logger.Warning("No process provided")
+		return
+	}
+	logger.Info("Starting process:" + args[0])
 }
 
 func KillProcess(args []string) {
+	if len(args) == 0 {
+		logger.Warning("No process provided")
+		return
+	}
+	n := utils.Atoi(args[0])
+	if n < 0 {
+		logger.Warning("Invalid process number")
+		return
+	}
+	logger.Info("Killing process:" + args[0])
 }
 
-func StopPlanification(args []string) {
+func StopPlanification(_ []string) {
+	logger.Info("Stopping planification")
 }
 
-func StartPlanification(args []string) {
+func StartPlanification(_ []string) {
+	logger.Info("Starting planification")
 }
 
-func ProcessList(args []string) {
+func ProcessList(_ []string) {
+	logger.Info("Process list")
 }

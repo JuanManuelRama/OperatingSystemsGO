@@ -2,8 +2,9 @@ package consola
 
 import (
 	"bufio"
-	"fmt"
 	"strings"
+
+	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/logger"
 )
 
 func ReadInput(scanner *bufio.Scanner) []string {
@@ -20,10 +21,10 @@ var commands = map[string]func([]string){
 	"PROCESS_LIST":        ProcessList,
 }
 
-func ProcesInput(input []string) {
+func ProcessInput(input []string) {
 	if fn, exists := commands[input[0]]; exists {
 		fn(input[1:])
 	} else {
-		fmt.Println("Unknown command")
+		logger.Warning("Unknown command")
 	}
 }
