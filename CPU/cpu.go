@@ -1,7 +1,7 @@
 package main
 
-import "github.com/JuanManuelRama/OperatingSyStemsGO/Commons/Connection"
+import "github.com/JuanManuelRama/OperatingSyStemsGO/commons/connection"
 
 func main() {
-	Connection.AcceptConection("kernel", "8080")
+	connection.AcceptConection("kernel", "8080")
 }

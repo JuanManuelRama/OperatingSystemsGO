@@ -1,3 +1,3 @@
-module github.com/JuanManuelRama/OperatingSyStemsGO/CPU
+module CPU
 
 go 1.23.3
