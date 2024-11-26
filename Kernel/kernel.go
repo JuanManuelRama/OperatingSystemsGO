@@ -1,18 +1,7 @@
 package main
 
-import (
-	"log"
-	"net"
-	"os"
-)
+import "github.com/JuanManuelRama/OperatingSyStemsGO/commons/connection"
 
 func main() {
-	conn, err := net.Dial("tcp", "localhost:8080")
-	if err != nil {
-		log.Fatal("Error connecting to server:", err)
-		os.Exit(1)
-	}
-	defer conn.Close()
-	message := "Hola"
-	conn.Write([]byte(message))
+	connection.Connect("kernel", "08080")
 }
