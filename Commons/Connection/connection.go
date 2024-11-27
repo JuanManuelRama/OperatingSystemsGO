@@ -8,7 +8,7 @@ import (
 )
 
 func AcceptConection(who string, port string) net.Conn {
-	listener, err := net.Listen("tcp", ":"+port)
+	listener, err := net.Listen("tcp", "localhost:"+port)
 	if err != nil {
 		logger.Error(err.Error() + "while starting server")
 	}
@@ -34,20 +34,20 @@ func Connect(who string, port string) net.Conn {
 	return conn
 }
 
-func SendCode(conn net.Conn, code byte) {
-	_, err := conn.Write([]byte{code})
+func SendCode(conn net.Conn, code uint8) {
+	err := binary.Write(conn, binary.BigEndian, code)
 	if err != nil {
 		logger.Error(err.Error() + "while sending code")
 	}
 }
 
-func ReciveCode(conn net.Conn) byte {
-	buf := make([]byte, 1)
-	_, err := conn.Read(buf)
+func ReciveCode(conn net.Conn) uint8 {
+	var code uint8
+	err := binary.Read(conn, binary.BigEndian, &code)
 	if err != nil {
 		logger.Error(err.Error() + "while reading code")
 	}
-	return buf[0]
+	return code
 }
 
 func SendInt(conn net.Conn, number int32) {
