@@ -2,6 +2,7 @@ package consola
 
 import (
 	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/logger"
+	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/process"
 	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/utils"
 	"github.com/JuanManuelRama/OperatingSyStemsGO/kernel/planner"
 )
@@ -23,7 +24,7 @@ func StartProcess(args []string) {
 	}
 	logger.Info("Starting process: " + args[0])
 	go func() {
-		planner.NewChan <- planner.Process{planner.PCB{pid, 0, planner.Registers{PC: 0}, "NEW", 0}, args[0]}
+		planner.NewChan <- planner.Process{process.PCB{pid, 0, process.Registers{PC: 0}, "NEW", 0}, args[0]}
 		pid++
 	}()
 }

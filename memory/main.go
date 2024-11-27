@@ -9,7 +9,9 @@ import (
 
 func main() {
 	var wait sync.WaitGroup
-	go attend.Kernel(connection.AcceptConection("kernel", "8081"))
+	server := connection.StartServer("8080")
+	//connection.AcceptConection("cpu", server)
+	go attend.Kernel(connection.AcceptConection("kernel", server))
 	wait.Add(1)
 	wait.Wait()
 }

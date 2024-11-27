@@ -7,14 +7,18 @@ import (
 	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/logger"
 )
 
-func AcceptConection(who string, port string) net.Conn {
+func StartServer(port string) net.Listener {
 	listener, err := net.Listen("tcp", "localhost:"+port)
 	if err != nil {
 		logger.Error(err.Error() + "while starting server")
 	}
+	logger.Info("Server on port " + port + " started succesfully")
+	return listener
+}
+
+func AcceptConection(who string, listener net.Listener) net.Conn {
 	logger.Info("Server is waiting for " + who)
 	conn, err := listener.Accept()
-	listener.Close()
 	if err != nil {
 		logger.Error(err.Error() + "while accepting connection")
 	}

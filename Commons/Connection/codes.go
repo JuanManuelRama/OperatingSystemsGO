@@ -6,4 +6,5 @@ const (
 	NEW_PROCESS
 	SUCCES
 	FAILIURE
+	FETCH
 )
