@@ -1,10 +1,14 @@
 package connection
 
 import (
+	"bytes"
 	"encoding/binary"
+	"encoding/gob"
+	"io"
 	"net"
 
 	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/logger"
+	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/process"
 )
 
 func StartServer(port string) net.Listener {
@@ -84,4 +88,25 @@ func ReciveString(conn net.Conn) string {
 		logger.Error(err.Error() + "while reading message")
 	}
 	return string(buf)
+}
+
+func SendPCB(conn net.Conn, pcb process.PCB) {
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+	_ = enc.Encode(pcb)
+	length := int32(buf.Len())
+	binary.Write(conn, binary.BigEndian, length)
+	conn.Write(buf.Bytes())
+}
+
+func RecivePCB(conn net.Conn) process.PCB {
+	var length int32
+	binary.Read(conn, binary.BigEndian, &length)
+	buf := make([]byte, length)
+	io.ReadFull(conn, buf) // Ensure full message is read
+
+	var pcb process.PCB
+	dec := gob.NewDecoder(bytes.NewReader(buf))
+	_ = dec.Decode(&pcb)
+	return pcb
 }

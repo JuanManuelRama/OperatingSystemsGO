@@ -7,13 +7,15 @@ import (
 	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/utils"
 )
 
+var Exit bool
+
 func SET(process *process.PCB, args []string) {
 	register := args[0]
 	value := uint(utils.Atoi(args[1]))
 	setRegister(register, &process.Registers, value)
 }
 
-func ADD(process *process.PCB, args []string) {
+func SUM(process *process.PCB, args []string) {
 	destiny := args[0]
 	source := args[1]
 	destinyValue := getRegister(destiny, process.Registers)
@@ -37,7 +39,12 @@ func JNZ(process *process.PCB, args []string) {
 	}
 }
 
+func EXIT(process *process.PCB, args []string) {
+	Exit = true
+}
+
 func getRegister(register string, registers process.Registers) uint {
+	println(register)
 	v := reflect.ValueOf(registers)
 	field := v.FieldByName(register)
 	return uint(field.Uint())

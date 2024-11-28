@@ -7,7 +7,7 @@ import (
 	"github.com/JuanManuelRama/OperatingSyStemsGO/kernel/planner"
 )
 
-var pid = 0
+var pid int32 = 0
 
 func ExecuteScript(args []string) {
 	if len(args) == 0 {
@@ -24,7 +24,7 @@ func StartProcess(args []string) {
 	}
 	logger.Info("Starting process: " + args[0])
 	go func() {
-		planner.NewChan <- planner.Process{process.PCB{pid, 0, process.Registers{PC: 0}, "NEW", 0}, args[0]}
+		planner.NewChan <- planner.Process{process.PCB{pid, 0, process.Registers{PC: 0}, "NEW"}, args[0]}
 		pid++
 	}()
 }

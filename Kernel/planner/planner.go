@@ -13,8 +13,8 @@ var ReadyChan = make(chan Process)
 func LongTermPlanner(memory net.Conn) {
 	for {
 		process := <-NewChan
-		process.PCB.Instructions = sendNewProcess(process, memory)
-		if process.PCB.Instructions == nil {
+
+		if sendNewProcess(process, memory) == connection.FAILIURE {
 			logger.Warning("Memory couldn't open file")
 			continue
 		}
@@ -24,19 +24,28 @@ func LongTermPlanner(memory net.Conn) {
 
 }
 
-func sendNewProcess(process Process, memory net.Conn) interface{} {
+func sendNewProcess(process Process, memory net.Conn) uint8 {
 	connection.SendCode(memory, connection.NEW_PROCESS)
+	connection.SendInt(memory, process.PCB.PID)
 	connection.SendString(memory, process.Joker)
-	if connection.ReciveCode((memory)) == connection.SUCCES {
-		return connection.ReciveString(memory)
-	}
-	return nil
+	return connection.ReciveCode((memory))
 }
 
-func ShortTermPlanner() {
+func ShortTermPlanner(cpu net.Conn) {
 	for {
 		process := <-ReadyChan
 		process.PCB.State = "RUNNING"
+		connection.SendPCB(cpu, process.PCB)
 		logger.Info("Running process: " + process.Joker)
+
+		process.PCB = connection.RecivePCB(cpu)
+		println("holas")
+		switch connection.ReciveCode(cpu) {
+		case connection.EXIT:
+			logger.Info("Process finished: " + process.Joker)
+		default:
+			logger.Warning("Unexpected exit code")
+		}
+		println("hola")
 	}
 }

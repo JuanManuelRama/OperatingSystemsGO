@@ -1,11 +1,10 @@
 package process
 
 type PCB struct {
-	PID          int
-	Quantum      int
-	Registers    Registers
-	State        string
-	Instructions interface{}
+	PID       int32
+	Quantum   int
+	Registers Registers
+	State     string
 }
 
 type Registers struct {
