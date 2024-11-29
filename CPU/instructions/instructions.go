@@ -44,7 +44,6 @@ func EXIT(process *process.PCB, args []string) {
 }
 
 func getRegister(register string, registers process.Registers) uint {
-	println(register)
 	v := reflect.ValueOf(registers)
 	field := v.FieldByName(register)
 	return uint(field.Uint())

@@ -17,6 +17,7 @@ func main() {
 	cpu := connection.Connect("kernel", "08081")
 
 	go planner.LongTermPlanner(memory)
+	go planner.Killer(memory)
 	go planner.ShortTermPlanner(cpu)
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
