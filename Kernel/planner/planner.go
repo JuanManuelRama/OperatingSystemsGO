@@ -39,13 +39,11 @@ func ShortTermPlanner(cpu net.Conn) {
 		logger.Info("Running process: " + process.Joker)
 
 		process.PCB = connection.RecivePCB(cpu)
-		println("holas")
 		switch connection.ReciveCode(cpu) {
 		case connection.EXIT:
 			logger.Info("Process finished: " + process.Joker)
 		default:
 			logger.Warning("Unexpected exit code")
 		}
-		println("hola")
 	}
 }

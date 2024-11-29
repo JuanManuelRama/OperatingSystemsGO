@@ -6,6 +6,7 @@ import (
 	"encoding/gob"
 	"io"
 	"net"
+	"strings"
 
 	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/logger"
 	"github.com/JuanManuelRama/OperatingSyStemsGO/commons/process"
@@ -87,7 +88,7 @@ func ReciveString(conn net.Conn) string {
 	if err != nil {
 		logger.Error(err.Error() + "while reading message")
 	}
-	return string(buf)
+	return strings.TrimRight(string(buf), "\x00")
 }
 
 func SendPCB(conn net.Conn, pcb process.PCB) {

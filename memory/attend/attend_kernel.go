@@ -26,8 +26,7 @@ func Kernel(kernel net.Conn) {
 func newProcess(kernel net.Conn) {
 	pid := connection.ReciveInt(kernel)
 	path := connection.ReciveString(kernel)
-	println(path)
-	file, err := os.Open("test.txt")
+	file, err := os.Open(path)
 	if err != nil {
 		logger.Warning(err.Error())
 		connection.SendCode(kernel, connection.FAILIURE)
